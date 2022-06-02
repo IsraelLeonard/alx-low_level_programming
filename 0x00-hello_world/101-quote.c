@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 /**
  * main - To print to standard error
  * Description: A program that prints output to standard error
