@@ -8,35 +8,24 @@
 
 int main(void)
 {
-int a1;
-int a;
-int b1;
-int b;
-for (a1 = 48; a1 < 58; a1++)
-{
-	for (a = 48; a < 58; a++)
+	int num1;
+	int num2;
+
+	for (num1 = 0; num1 <= 98; num1++)
 	{
-		b = a + 1;
-		b1 = a1;
-		for (; b1 < 58; b1++)
+		for (num2 = num1 + 1; num2 <= 99; num2++)
 		{
-			for (; b < 58; b++)
-			{
-				putchar(a1);
-				putchar(a);
-				putchar(' ');
-				putchar(b1);
-				putchar(b);
-				if (a1 != 57 || b1 != 57 || a != 56 || b != 56)
-				{
-					putchar(',');
-					putchar(' ');
-				}
-			}
-			b = 48;
+			putchar((num1 / 10) + '0');
+			putchar((num1 % 10) + '0');
+			putchar(' ');
+			putchar((num2 / 10) + '0');
+			putchar((num2 % 10) + '0');
+			if (num1 == 98 && num2 == 99)
+				continue;
+			putchar(',');
+			putchar(' ');
 		}
 	}
-}
-putchar('\n');
-return (0);
+	putchar('\n');
+	return (0);
 }
