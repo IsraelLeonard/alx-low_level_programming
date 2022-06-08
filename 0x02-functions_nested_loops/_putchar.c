@@ -1,9 +1,10 @@
+#include "main.h"
 #include <unistd.h>
 
 /**
  * main - check the code
- *
- *  Return: Always 0
+ * Description: A code checker
+ * Return: Always 0
  */
 int _putchar(char c)
 {
