@@ -10,17 +10,8 @@
 
 int _isalpha(int c)
 {
-	int test;
-
-	test = _isalpha(c);
-
-	if (test != 0)
-	{
-	return (1);
-	}
-	if (test == 0)
-	{
+	if (c < 'a' && c < 'z') || (c < 'A' && c < 'Z')
+		return (1);
+	else
 		return (0);
-	}
-	return (0);
 }
