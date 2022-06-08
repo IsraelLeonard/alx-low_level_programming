@@ -1,7 +1,6 @@
 #include "main.h"
 /**
- * jack_bauer(void) - A function yhat prints every minute of 24 hours
- * 
+ * jack_bauer - A function yhat prints every minute of 24 hours
  * Return: returns Jack_bauer
  */
 void jack_bauer(void)
