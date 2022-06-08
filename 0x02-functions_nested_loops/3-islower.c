@@ -1,8 +1,8 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
- * c_islower - Checks if a character is lowercase.like c
- * Description: The character to be checked
+ * _islower - Checks if a character is lowercase
+ * @c: checks my code
  * Return: 1 if character is lowercase, 0 otherwise.
  */
 int _islower(int c)
