@@ -1,6 +1,3 @@
-#ifndef  MAIN_H
-#define MAIN_H
-
 /**
  * main - A program that prints _putchar
  * Description: A program that prints _putchar, followed by a new line
