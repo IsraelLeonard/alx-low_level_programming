@@ -7,12 +7,13 @@
  */
 int main(void)
 {
-	unsigned long fib_1 = 0, fib_2 = 1, sum = fib_1 + fib_2;
+	unsigned long fib_1 = 0, fib_2 = 1, sum;
 
 	float total_sum;
 
 	while (1)
 	{
+		sum = fib_1 + fib_2;
 		if (sum > 4000000)
 			break;
 	if ((sum % 2) == 0)
