@@ -20,7 +20,7 @@ int main(void)
 	fib_1 = fib_2;
 	fib_2 = sum;
 	}
-	printf("%.0f\n", tatal_sum);
+	printf("%.0f\n", total_sum);
 		return (0);
 
 }
