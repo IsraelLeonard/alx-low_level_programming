@@ -18,7 +18,7 @@ void print_times_table(int n)
 			{
 				c = a * b;
 				d = c / 100;
-				e = (c / 100) % 10;
+				e = (c / 10) % 10;
 				f = (c % 100) % 10;
 				if (b == 0)
 				{
