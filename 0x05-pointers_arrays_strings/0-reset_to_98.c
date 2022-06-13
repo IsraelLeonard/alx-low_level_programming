@@ -1,5 +1,4 @@
-include "main.h"
-
+#include "main.h"
 /**
  * reset_to_98 - Uses the pointer to update the value of the variable
  * @n: the declared pointer variable
