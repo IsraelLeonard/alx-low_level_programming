@@ -17,7 +17,7 @@ if (argc != 3)
 	return (1);
 }
 else
-result = argv[1] * argv[2];
+result = atoi(argv[1]) * atoi(argv[2]);
 printf("%d\n", result);
 
 return (0);
