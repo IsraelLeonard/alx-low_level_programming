@@ -10,7 +10,7 @@
  * Return: return pointer to the new allocate memory
  */
 
-int *_mem-alloc(int *p, int *np, unsigned int old, unsigned int new)
+int *_memalloc(int *p, int *np, unsigned int old, unsigned int new)
 {
         unsigned int i;
 
@@ -63,7 +63,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
         {
 		total = sizeof(int) * (old_size + new_size);
 		n_ptr = malloc(total);
-                _mem-alloc(ptr, n_ptr, old_size, new_size);
+                _memalloc(ptr, n_ptr, old_size, new_size);
                 return (n_ptr);
         }
 return (n_ptr);
