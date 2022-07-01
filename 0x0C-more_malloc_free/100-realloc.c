@@ -2,7 +2,7 @@
 
 
 /**
- * _demystik - This function allocate content of old to new reallocate
+ * _mem-alloc - This function allocate content of old to new reallocate
  * @p: pointer to the old memory
  * @np: pointer to the new memory
  * @old: size of old memory
@@ -10,7 +10,7 @@
  * Return: return pointer to the new allocate memory
  */
 
-int *_demystik(int *p, int *np, unsigned int old, unsigned int new)
+int *_memalloc(int *p, int *np, unsigned int old, unsigned int new)
 {
         unsigned int i;
 
@@ -63,7 +63,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
         {
 		total = sizeof(int) * (old_size + new_size);
 		n_ptr = malloc(total);
-                _demystik(ptr, n_ptr, old_size, new_size);
+                _memalloc(ptr, n_ptr, old_size, new_size);
                 return (n_ptr);
         }
 return (n_ptr);
