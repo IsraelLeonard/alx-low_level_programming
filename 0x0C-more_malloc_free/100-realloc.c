@@ -16,7 +16,7 @@ int *_memalloc(int *p, int *np, unsigned int old, unsigned int new)
 
         for (i = 0; i < old; i++)
         {
-                np[i] = p[i];
+                p[i] = np[i];
         }
 
         return (np);
