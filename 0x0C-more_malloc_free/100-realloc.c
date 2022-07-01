@@ -2,7 +2,7 @@
 
 
 /**
- * _mem-alloc - This function allocate content of old to new reallocate
+ * _memalloc - This function allocate content of old to new reallocate
  * @p: pointer to the old memory
  * @np: pointer to the new memory
  * @old: size of old memory
