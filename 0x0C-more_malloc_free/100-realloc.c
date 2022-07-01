@@ -1,70 +1,54 @@
 #include "main.h"
-
-
-/**
- * _memalloc - This function allocate content of old to new reallocate
- * @p: pointer to the old memory
- * @np: pointer to the new memory
- * @old: size of old memory
- * @new: size of the new memory
- * Return: return pointer to the new allocate memory
- */
-
-int *_memalloc(int *p, int *np, unsigned int old, unsigned int new)
-{
-        unsigned int i;
-
-        for (i = 0; i < old; i++)
-        {
-                p[i] = np[i];
-        }
-
-        return (np);
-}
-
+#include <stdlib.h>
 
 /**
- * _realloc - this function reallocates a memory block using malloc and free
- * @ptr: pointer to the old memory
- * @old_size: size of the old memory
- * @new_size: size of the new memory
- * Return: The base address of the new memory
+ * *_realloc - reallocates a memory block using malloc and free
+ * @ptr: void pointer
+ * @old_size: already allocated size
+ * @new_size: new size to allocate
+ * Return: pointer to newly allocated memory or null
  */
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
-{
-	void *n_ptr;
-	unsigned int total;
 
+{
+	unsigned char *np;
+	unsigned int a;
 
 	if (new_size == old_size)
 		return (ptr);
-
-
-	if (ptr == NULL)
-	{
-		ptr = malloc(sizeof(int) * new_size);
-		if (ptr == NULL)
-		{
-			free(ptr);
-			return (NULL);
-		}
-
-	}
-	
-
 	if (new_size == 0 && ptr != NULL)
 	{
-		free (ptr);
+		free(ptr);
 		return (NULL);
 	}
-
-	  if (new_size > old_size)
-        {
-		total = sizeof(int) * (old_size + new_size);
-		n_ptr = malloc(total);
-                _memalloc(ptr, n_ptr, old_size, new_size);
-                return (n_ptr);
-        }
-return (n_ptr);
+	if (ptr == NULL)
+	{
+		ptr = malloc(new_size * sizeof(void *));
+		if (ptr == NULL)
+			return (NULL);
+		return (ptr);
+	}
+	np = malloc(new_size * sizeof(char));
+	if (np == NULL)
+		return (NULL);
+	a = 0;
+	if (new_size > old_size)
+	{
+		while (a < old_size)
+		{
+			np[a] = ((char *)ptr)[a];
+			a++;
+		}
+		free(ptr);
+		return (np);
+	}
+/* if new_size < old_size */
+	while (a < new_size)
+	{
+		np[a] = ((char *)ptr)[a];
+		a++;
+	}
+	free(ptr);
+	return (np);
 }
