@@ -1,174 +1,181 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "main.h"
 
+void populateResult(char *dest, char *n1, int n1_len, char *n2, int n2_len);
+int getLengthOfNum(char *str);
+void print_result(char *src, int length);
+
 /**
- * _calloc - allocate (`size' * `nmemb') bytes and set to 0
- * @nmemb: number of elements
- * @size: number of bytes per element
+ * main - entry point, multiplies two numbers
  *
- * Return: pointer to memory, or NULL if `nmemb' or `size' is 0 or malloc fails
- */
-void *_calloc(unsigned int nmemb, unsigned int size)
-{
-	unsigned int i;
-	char *p;
-
-	if (size == 0 || nmemb == 0)
-		return (NULL);
-	p = malloc(nmemb * size);
-	if (p == NULL)
-		return (NULL);
-	for (i = 0; i < nmemb * size; ++i)
-		p[i] = 0;
-	return (p);
-}
-
-/**
- * _strdigit - check if string `s' is composed only of digits
- * @s: string to check
+ * @argc: integer, length of @argv
  *
- * Return: 1 if true, 0 if false
- */
-int _strdigit(char *s)
-{
-	if (*s == '-' || *s == '+')
-		++s;
-	while (*s)
-	{
-		if (*s < '0' || *s > '9')
-		{
-			return (0);
-		}
-		++s;
-	}
-	return (1);
-}
-
-/**
- * _puts - print string `s'
- * @s: string to print
- */
-void _puts(char *s)
-{
-	while (*s)
-		_putchar(*(s++));
-}
-
-/**
- * rev_num_str - reverse a number string up to trailing zeros
- * @start: beginning of number
- * @end: end of number
- * @ns: string containing number
- */
-void rev_num_str(int start, int end, char *ns)
-{
-	int i, j;
-	char tmp;
-
-	while (ns[end] == 0 && end != start)
-		--end;
-	for (i = start, j = end; i <= j; ++i, --j)
-	{
-		tmp = ns[i] + '0';
-		ns[i] = ns[j] + '0';
-		ns[j] = tmp;
-	}
-}
-
-/**
- * _strlen - calculate length of string `s'
- * @s: string to get length of
+ * @argv: one-dimensional array of strings, arguments of this program
  *
- * Return: length of string
+ * Return: 0, success
  */
-int _strlen(char *s)
-{
-	int i;
 
-	for (i = 0; s[i]; ++i)
-		;
-	return (i);
-}
-
-/**
- * strmul - multply two numbers as strings
- * @a: first number
- * @b: second number
- *
- * Return: pointer to result on success, or NULL on failure
- */
-char *strmul(char *a, char *b)
-{
-	int la, lb, i, j, k, l, neg = 0;
-	char *result;
-	char mul, mul_carry, sum, sum_carry;
-
-	if (*a == '-')
-	{
-		neg ^= 1;
-		++a;
-	}
-	if (*b == '-')
-	{
-		neg ^= 1;
-		++b;
-	}
-	la = _strlen(a);
-	lb = _strlen(b);
-	result = _calloc(la + lb + 1 + neg, sizeof(char));
-	if (result == NULL)
-		return (NULL);
-	if (neg)
-		result[0] = '-';
-	for (i = lb - 1, l = neg; i >= 0; --i, ++l)
-	{
-		mul_carry = 0;
-		sum_carry = 0;
-		for (j = la - 1, k = l; j >= 0; --j, ++k)
-		{
-			mul = (a[j] - '0') * (b[i] - '0') + mul_carry;
-			mul_carry = mul / 10;
-			mul %= 10;
-			sum = result[k] + mul + sum_carry;
-			sum_carry = sum / 10;
-			sum %= 10;
-			result[k] = sum;
-		}
-		result[k] = sum_carry + mul_carry;
-	}
-	rev_num_str(neg, k, result);
-	return (result);
-}
-
-/**
- * main - multiply two numbers from the command line and print the result
- * @argc: argument count
- * @argv: argument list
- *
- * Return: 0 if successful, 98 if failure
- */
 int main(int argc, char *argv[])
 {
+	int num1_length, num2_length;
 	char *result;
 
 	if (argc != 3)
 	{
-		_puts("Error\n");
+		printf("Error\n");
 		exit(98);
 	}
-	if (!_strdigit(argv[1]) || !_strdigit(argv[2]))
+
+	num1_length = getLengthOfNum(argv[1]);
+
+	if (!num1_length)
 	{
-		_puts("Error\n");
+		printf("Error\n");
 		exit(98);
 	}
-	result = strmul(argv[1], argv[2]);
-	if (result == NULL)
+
+	num2_length = getLengthOfNum(argv[2]);
+
+	if (!num2_length)
 	{
-		_puts("Error\n");
+		printf("Error\n");
 		exit(98);
 	}
-	_puts(result);
-	_putchar('\n');
+
+	result = malloc(num1_length + num2_length);
+
+	if (!result)
+		return (1);
+
+	populateResult(result, argv[1], num1_length, argv[2], num2_length);
+
+	print_result(result, num1_length + num2_length);
+	printf("\n");
 	free(result);
-	exit(EXIT_SUCCESS);
+
+	return (0);
+}
+
+/**
+ * getLengthOfNum - length of numbers in a string
+ *
+ * @str: pointer to string of numbers
+ *
+ * Return: integer (SUCCESS) or
+ * NULL, if string includes char
+ */
+
+int getLengthOfNum(char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			i++;
+		else
+			return ('\0');
+
+	}
+
+	return (i);
+}
+
+/**
+ * populateResult - multiplies two numbers stored as string
+ * and stores result in @dest
+ *
+ * @dest: pointer to where @num1 * @num2 should be stored
+ *
+ * @n1: positive number stored as string in an array
+ *
+ * @n2: positive number stored as string in an array
+ *
+ * @n1_len: length of @n1
+ *
+ * @n2_len: length of @n2
+ */
+
+void populateResult(char *dest, char *n1, int n1_len, char *n2, int n2_len)
+{
+	int i, j, k, temp_value, non_carry_value;
+	int carry_value = 0;
+	char *multiplicand, *multiplier;
+
+	if (n1_len > n2_len)
+	{
+		i = n1_len - 1;
+		j = n2_len - 1;
+		multiplicand = n1;
+		multiplier = n2;
+	}
+	else
+	{
+		i = n2_len - 1;
+		j = n1_len - 1;
+		multiplicand = n2;
+		multiplier = n1;
+	}
+
+	while (i >= 0)
+	{
+		k = i;
+
+		while (k >= 0)
+		{
+			temp_value = ((multiplicand[k] - '0') * (multiplier[j] - '0'));
+			temp_value += carry_value;
+
+			if (j + 1 <= n2_len - 1 && dest[k + j + 1] >= '0' && dest[k + j + 1] <= '9')
+				temp_value += dest[k + j + 1] - '0';
+
+			if (temp_value < 10)
+			{
+				non_carry_value = temp_value;
+				carry_value = 0;
+			}
+			else
+			{
+				non_carry_value = temp_value % 10;
+				carry_value = temp_value / 10;
+			}
+
+			dest[k + j + 1] = non_carry_value + '0';
+			k--;
+		}
+
+		if (carry_value)
+			dest[k + j + 1] = carry_value + '0';
+
+		carry_value = 0;
+
+		if (j > 0)
+			j--;
+		else
+			i = -1;
+	}
+
+	free(dest);
+	free(multiplicand);
+	free(multiplier);
+}
+
+/**
+ * print_result - prints numbers stored as string in a memory location
+ *
+ * @src: pointer to memory that stores numbers as strings
+ *
+ * @length: length of @src
+ */
+
+void print_result(char *src, int length)
+{
+	int i;
+
+	for (i = 0; i < length; i++)
+	{
+		if (src[i] >= '0' && src[i] <= '9')
+		printf("%c", src[i]);
+	}
 }
